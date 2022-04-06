@@ -2,7 +2,6 @@ package com.algaworks.algafood.auth.domain;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,14 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Usuario {
+public class Grupo {
 
     @Id
     @EqualsAndHashCode.Include
@@ -29,16 +27,10 @@ public class Usuario {
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
-    private String senha;
-
-    @ManyToMany()
-    @JoinTable(name = "usuario_grupo",
-            joinColumns = @JoinColumn(name = "usuario_id"),
-            inverseJoinColumns = @JoinColumn(name = "grupo_id"))
-    private Set<Grupo> grupos = new HashSet<>();
+    @ManyToMany
+    @JoinTable(name = "grupo_permissao",
+            joinColumns = @JoinColumn(name = "grupo_id"),
+            inverseJoinColumns = @JoinColumn(name = "permissao_id"))
+    private Set<Permissao> permissoes = new HashSet<>();
 
 }
